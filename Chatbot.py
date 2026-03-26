@@ -1,12 +1,18 @@
 import streamlit as st
 import string
 import nltk
+import os
 
-try:
-    nltk.data.find('tokenizers/punkt')
-except LookupError:
-    nltk.download('punkt')
-    nltk.download('punkt_tab')
+nltk_data_path = "/tmp/nltk_data"
+
+if not os.path.exists(nltk_data_path):
+    os.makedirs(nltk_data_path)
+
+nltk.data.path.append(nltk_data_path)
+
+nltk.download('punkt', download_dir=nltk_data_path)
+nltk.download('punkt_tab', download_dir=nltk_data_path)
+nltk.download('stopwords', download_dir=nltk_data_path)
 
 from sklearn.feature_extraction.text import TfidfVectorizer
 from sklearn.metrics.pairwise import cosine_similarity
